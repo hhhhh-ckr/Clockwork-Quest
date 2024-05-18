@@ -17,6 +17,7 @@ public class PlayerControllerb : MonoBehaviour
     public int lives = 3; 
     public Transform respawnPoint; 
     public UIManager uiManager;
+    public PerformanceEvaluatorb performanceEvaluator; // Performans değerlendirici
 
     private void Start()
     {
@@ -76,7 +77,13 @@ private void Move()
         }
         else if (collision.gameObject.CompareTag("Hazard"))
         {
+            performanceEvaluator.RecordDamage(10); // Örnek hasar miktarı
             LoseLife();
+        }
+        else if (collision.gameObject.CompareTag("Collectible"))
+        {
+            performanceEvaluator.RecordItemCollected();
+            Destroy(collision.gameObject);
         }
     }
 
@@ -108,6 +115,9 @@ private void Move()
 
     private void GameOver()
     {
+        int performanceScore = performanceEvaluator.CalculatePerformanceScore();
+        string performanceComment = performanceEvaluator.GetPerformanceComment(performanceScore);
+        GameManagerb.instance.performanceMessage = performanceComment; // Mesajı GameManager'da sakla
         SceneManager.LoadScene("GameOverb"); 
     }
 }

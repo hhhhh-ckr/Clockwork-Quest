@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class GameManagerb : MonoBehaviour
 {
-    public PerformanceTrackerb performanceTracker;
-    public AICommentatorb aiCommentator;
-    public DialogueSystemb dialogueSystem;
+    public static GameManagerb instance;
 
-    private void EndLevel()
+    public string performanceMessage;
+
+    private void Awake()
     {
-        // Performans verilerini al ve AI yorumunu göster
-        dialogueSystem.ShowEndOfLevelDialogue();
-        // Performans verilerini sıfırla
-        performanceTracker.Reset();
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject); // Bu GameObject'in sahne değişimlerinde yok olmamasını sağlar
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 }
