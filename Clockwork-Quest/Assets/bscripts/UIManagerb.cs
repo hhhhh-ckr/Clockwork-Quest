@@ -5,26 +5,17 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public static UIManager instance; 
-
-    public Text livesText; 
-
-    // private void Awake()
-    // {
-    //
-    //     if (instance == null)
-    //     {
-    //         instance = this;
-    //     }
-    //     else
-    //     {
-    //         Destroy(gameObject); 
-    //     }
-    // }
-
+    public Text livesText; // Unity Editor'da atanacak
 
     public void UpdateLives(int lives)
     {
-        livesText.text = "Lives: " + lives; 
+        if (livesText != null)
+        {
+            livesText.text = "Lives: " + lives;
+        }
+        else
+        {
+            Debug.LogError("Lives Text is not assigned.");
+        }
     }
 }

@@ -108,6 +108,6 @@ private void Move()
 
     private void GameOver()
     {
-        SceneManager.LoadScene("GameOverScene"); 
+        SceneManager.LoadScene("GameOverb"); 
     }
 }
