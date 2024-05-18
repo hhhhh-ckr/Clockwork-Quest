@@ -8,6 +8,7 @@ TagManager:
   - FastPowerUp
   - Hazard
   - Ground
+  - Son
   layers:
   - Default
   - TransparentFX
@@ -44,4 +45,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 4085049753
+    locked: 0
+  - name: Main
+    uniqueID: 4127622163
     locked: 0
