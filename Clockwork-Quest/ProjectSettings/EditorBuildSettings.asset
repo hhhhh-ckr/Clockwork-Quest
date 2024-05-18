@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: "Assets/Scenes/B\xF6l\xFCm1b.unity"
+    path: Assets/Scenes/Bolum1b.unity
     guid: 8944154facc69ab4da101785528456e9
   - enabled: 1
     path: Assets/Scenes/GameOverb.unity
