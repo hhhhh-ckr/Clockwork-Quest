@@ -5,26 +5,36 @@ using UnityEngine.SceneManagement;
 
 public class PlayerControllerb : MonoBehaviour
 {
-    public Animator animator;
-    
+    public static PlayerControllerb instance;
+
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
     public float slowSpeed = 2.5f;
     public float fastSpeed = 7.5f;
-    private float originalSpeed;
+    public int lives = 3;
 
-    private Rigidbody2D rb;
-    private bool isGrounded;
-
-    public int lives = 3; 
-    public Transform respawnPoint; 
+    
+    public Transform respawnPoint;
     public UIManager uiManager;
     public PerformanceEvaluatorb performanceEvaluator; // Performans değerlendirici
+
+    private float originalSpeed;
+    private bool isGrounded;
+
+    private Rigidbody2D rb;
+    private SpriteRenderer Sprite;
+    private Animator animator;
+
+    private void Awake()
+    {
+        originalSpeed = moveSpeed;
+    }
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        originalSpeed = moveSpeed;
+        Sprite = rb.GetComponent<SpriteRenderer>();
+        animator = rb.GetComponent<Animator>();
         uiManager.UpdateLives(lives); 
     }
 
@@ -33,11 +43,20 @@ public class PlayerControllerb : MonoBehaviour
         Move();
         Jump();
         UpdateAnimator();
+        LeftMouseClick();
     }
     private void Move()
     {
         float moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+        if (moveInput < 0)
+        {
+            Sprite.flipX = false;
+        }
+        else if (moveInput > 0)
+        {
+            Sprite.flipX = true;
+        }
     }
 
     private void Jump()
@@ -45,15 +64,26 @@ public class PlayerControllerb : MonoBehaviour
         if ((Input.GetButtonDown("Vertical") || Input.GetButtonDown("Jump")) && isGrounded) //W tuşu yada Space bar
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            animator.SetBool("IsJumping", true);
             isGrounded = false;
         }
     }
     
+    private void LeftMouseClick()
+    {
+        if (Input.GetMouseButton(0)) //Mouse sol tuşu basılı tutma
+        {
+            GameManagerb.instance.UsePowerUp();
+        }
+        else if (moveSpeed != originalSpeed)
+        {
+            ResetSpeed();
+        }
+    }
+
     private void UpdateAnimator()
     {
         float speed = Mathf.Abs(rb.velocity.x); // Mutlak değerini alarak hızı pozitif yapar
-        animator.SetFloat("Speed", moveSpeed);
+        animator.SetFloat("Speed", speed);
         
         animator.SetBool("IsGrounded", isGrounded);
     }
@@ -63,7 +93,6 @@ public class PlayerControllerb : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
-            animator.SetBool("IsJumping", false);
         }
     }
 
@@ -85,9 +114,8 @@ public class PlayerControllerb : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("FastPowerUp"))
         {
-            moveSpeed = fastSpeed;
+            GameManagerb.instance.AddPowerUp();
             Destroy(collision.gameObject);
-            Invoke("ResetSpeed", 5f);
         }
         else if (collision.gameObject.CompareTag("Hazard"))
         {

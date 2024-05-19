@@ -20,11 +20,11 @@ TagManager:
   - 
   - 
   - 
+  - background
   - 
+  - midground
   - 
-  - 
-  - 
-  - 
+  - foreground
   - 
   - 
   - 
@@ -49,6 +49,9 @@ TagManager:
   - name: Background
     uniqueID: 4085049753
     locked: 0
-  - name: Main
+  - name: MidGround
     uniqueID: 4127622163
+    locked: 0
+  - name: ForeGround
+    uniqueID: 4167908831
     locked: 0
