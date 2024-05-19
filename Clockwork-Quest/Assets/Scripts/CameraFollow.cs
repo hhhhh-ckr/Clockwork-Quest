@@ -5,21 +5,23 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     // Oyuncunun Transform bileþeni
-    // editorden seçilecek
     public Transform player;
 
     // Kamera ile oyuncu arasýndaki offset (mesafe farký)
-    private Vector3 offset;
+    public Vector3 offset;
 
-    void Start()
-    {
-        // Offset hesapla
-        offset = transform.position - player.position;
-    }
+    // Kamera hareket hýzýný kontrol etmek için smoothTime
+    public float smoothTime = 0.3f;
+
+    // Dahili kullaným için bir hýz vektörü
+    private Vector3 velocity = Vector3.zero;
 
     void LateUpdate()
     {
-        // Kameranýn pozisyonunu güncelle
-        transform.position = player.position + offset;
+        // Kameranýn hedef pozisyonunu hesapla
+        Vector3 targetPosition = player.position + offset;
+
+        // Kamerayý hedef pozisyona doðru yumuþak bir þekilde hareket ettir
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
     }
 }

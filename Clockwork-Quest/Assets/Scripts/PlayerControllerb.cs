@@ -7,7 +7,7 @@ public class PlayerControllerb : MonoBehaviour
 {
     public Animator animator;
     
-   public float moveSpeed = 5f;
+    public float moveSpeed = 5f;
     public float jumpForce = 5f;
     public float slowSpeed = 2.5f;
     public float fastSpeed = 7.5f;
