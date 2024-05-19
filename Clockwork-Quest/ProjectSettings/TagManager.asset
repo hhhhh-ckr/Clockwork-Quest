@@ -8,7 +8,7 @@ TagManager:
   - FastPowerUp
   - Hazard
   - Ground
-  - Son
+  - EndLevel
   layers:
   - Default
   - TransparentFX
