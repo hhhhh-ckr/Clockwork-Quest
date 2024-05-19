@@ -11,7 +11,6 @@ public class GameManagerb : MonoBehaviour
 
     // Oyuncunun performans yazısı
     public string performanceMessage;
-    public int performanceScore;
 
     private void Awake()
     {

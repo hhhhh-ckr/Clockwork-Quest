@@ -7,29 +7,14 @@ using UnityEngine.UI;
 public class GameOverUIManagerb : MonoBehaviour
 {
     public Text performanceText;
-    
-    public PerformanceEvaluatorb performanceEvaluator;
-    public Text scoreText;
 
     private void Start()
     {
         if (GameManagerb.instance != null)
         {
-            performanceText.text = GameManagerb.instance.performanceMessage;
-            scoreText.text = "Score: " + GameManagerb.instance.performanceScore.ToString();
+            performanceText.text = GameManagerb.instance.performanceMessage; // Mesajı UI Text'e yazdır
         }
-        
-        // Performansı değerlendir ve sonucu göster
-        ShowPerformance();
     }
-    
-    public void ShowPerformance()
-    {
-        int performanceScore = performanceEvaluator.CalculatePerformanceScore();
-        string performanceComment = performanceEvaluator.GetPerformanceComment(performanceScore);
-        performanceText.text = performanceComment;
-    }
-
     
     public void BackToMainMenu()
     {

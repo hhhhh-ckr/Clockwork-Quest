@@ -6,9 +6,9 @@ using UnityEngine.UI;  // UIManager kullanarak metni gösterebilmek için
 public class PerformanceEvaluatorb : MonoBehaviour
 {
     public Text performanceText; // Performans yorumunu göstermek için
-    public float completionTime;
-    public int damageTaken;
-    public int itemsCollected;
+    private float completionTime;
+    private int damageTaken;
+    private int itemsCollected;
 
     private void Start()
     {
