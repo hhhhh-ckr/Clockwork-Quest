@@ -6,12 +6,20 @@ public class LevelEndTrigger : MonoBehaviour
 {
     public Animator transition;
     public float transitionTime = 1f;
+    
+    private SceneTracker sceneTracker;
+
+    private void Start()
+    {
+        sceneTracker = FindObjectOfType<SceneTracker>();
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
             StartCoroutine(LoadNextLevel());
+            sceneTracker.SaveLastPlayedScene("NextLevelSceneName");
         }
     }
 

@@ -15,6 +15,7 @@ public class GameOverUIManagerb : MonoBehaviour
             performanceText.text = GameManagerb.instance.performanceMessage; // Mesajı UI Text'e yazdır
         }
     }
+    
     public void BackToMainMenu()
     {
         SceneManager.LoadScene("MainMenub"); 
