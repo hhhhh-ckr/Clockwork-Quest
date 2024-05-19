@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerControllerb : MonoBehaviour
 {
+    public Animator animator;
+    
    public float moveSpeed = 5f;
     public float jumpForce = 5f;
     public float slowSpeed = 2.5f;
@@ -30,6 +32,7 @@ public class PlayerControllerb : MonoBehaviour
     {
         Move();
         Jump();
+        UpdateAnimator();
     }
     private void Move()
     {
@@ -42,7 +45,17 @@ public class PlayerControllerb : MonoBehaviour
         if ((Input.GetButtonDown("Vertical") || Input.GetButtonDown("Jump")) && isGrounded) //W tuşu yada Space bar
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            animator.SetBool("IsJumping", true);
+            isGrounded = false;
         }
+    }
+    
+    private void UpdateAnimator()
+    {
+        float speed = Mathf.Abs(rb.velocity.x); // Mutlak değerini alarak hızı pozitif yapar
+        animator.SetFloat("Speed", moveSpeed);
+        
+        animator.SetBool("IsGrounded", isGrounded);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -50,6 +63,7 @@ public class PlayerControllerb : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+            animator.SetBool("IsJumping", false);
         }
     }
 
@@ -79,11 +93,6 @@ public class PlayerControllerb : MonoBehaviour
         {
             performanceEvaluator.RecordDamage(10); // Örnek hasar miktarı
             LoseLife();
-        }
-        else if (collision.gameObject.CompareTag("Collectible"))
-        {
-            performanceEvaluator.RecordItemCollected();
-            Destroy(collision.gameObject);
         }
     }
 

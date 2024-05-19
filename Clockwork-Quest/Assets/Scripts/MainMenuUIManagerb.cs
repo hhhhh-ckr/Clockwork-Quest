@@ -8,7 +8,7 @@ public class MainMenuUIManagerb : MonoBehaviour
 {
     public void StartGame()
     {
-        SceneManager.LoadScene("Bolum1b"); 
+        SceneManager.LoadScene("Bolum1"); 
     }
 
 
