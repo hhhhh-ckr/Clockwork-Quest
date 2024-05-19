@@ -16,7 +16,7 @@ public class PlayerControllerb : MonoBehaviour
     
     public Transform respawnPoint;
     public UIManager uiManager;
-    public PerformanceEvaluatorb performanceEvaluator; // Performans değerlendirici
+    public PerformanceEvaluatorb performanceEvaluator;
 
     private float originalSpeed;
     private bool isGrounded;
@@ -116,6 +116,11 @@ public class PlayerControllerb : MonoBehaviour
         {
             GameManagerb.instance.AddPowerUp();
             Destroy(collision.gameObject);
+<<<<<<< Updated upstream
+=======
+            Invoke("ResetSpeed", 5f);
+            performanceEvaluator.RecordItemCollected(); // FastPowerUp item'ı toplandığında çağrılır
+>>>>>>> Stashed changes
         }
         else if (collision.gameObject.CompareTag("Hazard"))
         {
@@ -154,7 +159,8 @@ public class PlayerControllerb : MonoBehaviour
     {
         int performanceScore = performanceEvaluator.CalculatePerformanceScore();
         string performanceComment = performanceEvaluator.GetPerformanceComment(performanceScore);
-        GameManagerb.instance.performanceMessage = performanceComment; // Mesajı GameManager'da sakla
+        GameManagerb.instance.performanceMessage = performanceComment;
+        GameManagerb.instance.performanceScore = performanceScore;
         SceneManager.LoadScene("GameOverb"); 
     }
 }
