@@ -23,15 +23,8 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         originalSpeed = moveSpeed;
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
 
@@ -131,7 +124,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("EndLevel"))
         {
-            GameManager.instance.GameOver();
+            GameManager.instance.GameFinish();
         }
     }
 }

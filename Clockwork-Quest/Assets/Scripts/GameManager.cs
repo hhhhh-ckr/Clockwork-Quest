@@ -19,15 +19,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject); // Bu GameObject'in sahne değişimlerinde yok olmamasını sağlar
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()
@@ -41,6 +34,7 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         completionTime += Time.deltaTime; //Tamamlama zamanı
+        LeftMouseClick();
     }
 
     public void Damage(int damage)
@@ -71,7 +65,7 @@ public class GameManager : MonoBehaviour
     }
     public void LeftMouseClick()
     {
-        if (Input.GetMouseButton(0) && (powerUpCount != 0)) //Mouse sol tuşu basılı tutma
+        if (Input.GetMouseButtonDown(0) && (powerUpCount != 0)) //Mouse sol tuşu basılı tutma
         {
             UsePowerUp();
         }
@@ -86,6 +80,14 @@ public class GameManager : MonoBehaviour
         int performanceScore = CalculatePerformanceScore();
         string performanceComment = GetPerformanceComment(performanceScore);
         UIManager.instance.GameOverUI(performanceScore, performanceComment);
+        SceneTracker.instance.LoadScene("GameOver");
+    }
+
+    public void GameFinish()
+    {
+        int performanceScore = CalculatePerformanceScore();
+        string performanceComment = GetPerformanceComment(performanceScore);
+        UIManager.instance.GameFinishUI(performanceScore, performanceComment);
         SceneTracker.instance.LoadScene("GameOver");
     }
 

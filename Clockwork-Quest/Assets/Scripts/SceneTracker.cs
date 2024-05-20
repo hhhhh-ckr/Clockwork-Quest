@@ -15,15 +15,8 @@ public class SceneTracker : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
     
     public void LoadScene(string name)
@@ -44,12 +37,7 @@ public class SceneTracker : MonoBehaviour
         {
             SceneManager.LoadScene(CreditsSceneName);
         }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        // Çarpışma olup olmadığını kontrol edin ve çarpışan nesnenin etiketini kontrol edin
-        if (collision.gameObject.CompareTag("SceneEnder")) // Örnek olarak, eğer çarpışan nesne "Player" etiketine sahipse
+        else if (name == "End")
         {
             SceneManager.LoadScene(EndSceneName);
         }

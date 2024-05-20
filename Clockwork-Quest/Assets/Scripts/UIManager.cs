@@ -11,23 +11,18 @@ public class UIManager : MonoBehaviour
     public List<Image> healthImages; //Bütün can spritelerini seç ve sürükle
     public Text performanceScore; // Oyuncunun performans skoru
     public Text performanceText; // Oyuncunun performans yazýsý
+    public Text finishText;
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public void LoseLife()
     {
         playerLive--;
+        UpdateLives();
         if (playerLive > 0)
         {
             PlayerController.instance.Respawn();
@@ -36,7 +31,6 @@ public class UIManager : MonoBehaviour
         {
             GameManager.instance.GameOver();
         }
-        UpdateLives();
     }
 
     public void UpdateLives()
@@ -56,22 +50,15 @@ public class UIManager : MonoBehaviour
 
     public void GameOverUI(int score, string comment)
     {
-        if (performanceScore != null)
-        {
-            performanceScore.text = "Skor: " + score.ToString();
-        }
-        else
-        {
-            performanceScore = performanceScore;
-        }
-        
-        if (performanceText != null)
-        {
-            performanceText.text = comment.ToString();
-        }
-        else
-        {
-            performanceText = performanceText;
-        }
+        finishText.text = "Oyun Bitti";
+        performanceScore.text = "Skor: " + score.ToString();
+        performanceText.text = comment.ToString();
+    }
+
+    public void GameFinishUI(int score, string comment)
+    {
+        finishText.text = "Kazandýn";
+        performanceScore.text = "Skor: " + score.ToString();
+        performanceText.text = comment.ToString();
     }
 }
