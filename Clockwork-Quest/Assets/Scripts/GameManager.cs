@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public int playerLive = 3; // Oyuncunun can miktarı
     public int score = 1000; // Oyuncunun skoru
     public float powerUpCount = 0; // Oyuncunun power-up miktarı
 
@@ -34,43 +32,20 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Time.timeScale = 1;
         completionTime = 0f;
         damageTaken = 0;
         itemsCollected = 0;
-        uiManager.UpdateLives(playerLive);
+        uiManager = GetComponent<UIManager>();
     }
 
     private void Update()
     {
         completionTime += Time.deltaTime; //Tamamlama zamanı
-        LeftMouseClick();
     }
 
     public void Damage(int damage)
     {
         damageTaken += damage; //Alınan hasar
-    }
-
-    public void LoseLife()
-    {
-        playerLive--;
-        uiManager.UpdateLives(playerLive);
-
-        if (playerLive <= 0)
-        {
-            GameOver();
-        }
-        else
-        {
-            PlayerController.instance.Respawn();
-        }
-    }
-
-    private void GameOver()
-    {
-        EvaluatePerformance();
-        SceneManager.LoadScene("GameOverb");
     }
 
     public void ItemCollected()
@@ -100,17 +75,18 @@ public class GameManager : MonoBehaviour
         {
             UsePowerUp();
         }
-        else
+        else if (powerUpCount == 0)
         {
             PlayerController.instance.ResetSpeed();
         }
     }
 
-    public void EvaluatePerformance()
+    public void GameOver()
     {
         int performanceScore = CalculatePerformanceScore();
         string performanceComment = GetPerformanceComment(performanceScore);
         UIManager.instance.GameOverUI(performanceScore, performanceComment);
+        SceneTracker.instance.LoadScene("GameOver");
     }
 
     public int CalculatePerformanceScore()
@@ -124,17 +100,17 @@ public class GameManager : MonoBehaviour
 
     public string GetPerformanceComment(int score)
     {
-        if (score >= 80)
+        if (score >= 700)
         {
-            return "Harika iş çıkardın! Zamanın bile senin hızına yetişemedi!";
+            return "Harika iş çıkardın!";
         }
-        else if (score >= 50)
+        else if (score >= 400)
         {
-            return "İyi iş! Ama daha hızlı olabilirdin!";
+            return "İyi iş!";
         }
         else
         {
-            return "Daha iyisini yapabilirsin! Sanki zaman seni geçti gibi!";
+            return "Daha iyisini yapabilirsin!";
         }
     }
 

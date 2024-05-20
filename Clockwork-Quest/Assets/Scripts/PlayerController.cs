@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,9 +16,6 @@ public class PlayerController : MonoBehaviour
     private float originalSpeed;
     private bool isGrounded;
 
-    private UIManager um;
-    private GameManager gm;
-    private Transform playerTransfrom;
     private Rigidbody2D rigidb;
     private SpriteRenderer sprite;
     private Animator animator;
@@ -27,14 +23,24 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         originalSpeed = moveSpeed;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
+
 
     private void Start()
     {
-        playerTransfrom = GetComponent<Transform>();
         rigidb = GetComponent<Rigidbody2D>();
         sprite = rigidb.GetComponent<SpriteRenderer>();
         animator = rigidb.GetComponent<Animator>();
+        Time.timeScale = 1f;
     }
 
     private void Update()
@@ -93,7 +99,7 @@ public class PlayerController : MonoBehaviour
         else if (collision.gameObject.CompareTag("Hazard"))
         {
             GameManager.instance.Damage(10);
-            GameManager.instance.LoseLife();
+            UIManager.instance.LoseLife();
         }
     }
 
@@ -122,6 +128,10 @@ public class PlayerController : MonoBehaviour
         {
             GameManager.instance.ItemCollected();
             Destroy(collision.gameObject);
+        }
+        else if (collision.gameObject.CompareTag("EndLevel"))
+        {
+            GameManager.instance.GameOver();
         }
     }
 }

@@ -5,15 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class SceneTracker : MonoBehaviour
 {
+    public static SceneTracker instance;
+
     public string StartingSceneName; // Oyunun başladığı sahne
     public string MainMenuSceneName; // Oyunun ana ekran sahnesi
     public string GameOverSceneName; // Oyuncunun kaybettiği sahne
     public string CreditsSceneName; // Oyunu yapanların olduğu sahne
     public string EndSceneName; // Oyunun bittiği sahne
 
-    private void Start()
+    private void Awake()
     {
-        DontDestroyOnLoad(gameObject); // Bu GameObject'ı diğer sahnelerde de kullanabilmek için yok etme
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
     
     public void LoadScene(string name)
