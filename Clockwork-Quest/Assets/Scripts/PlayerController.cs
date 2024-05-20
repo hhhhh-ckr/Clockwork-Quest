@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("EndLevel"))
         {
-            GameManager.instance.GameFinish();
+            GameManager.instance.GameOver();
         }
     }
 }

@@ -11,7 +11,6 @@ public class UIManager : MonoBehaviour
     public List<Image> healthImages; //Bütün can spritelerini seç ve sürükle
     public Text performanceScore; // Oyuncunun performans skoru
     public Text performanceText; // Oyuncunun performans yazýsý
-    public Text finishText;
 
     private void Awake()
     {
@@ -50,14 +49,6 @@ public class UIManager : MonoBehaviour
 
     public void GameOverUI(int score, string comment)
     {
-        finishText.text = "Oyun Bitti";
-        performanceScore.text = "Skor: " + score.ToString();
-        performanceText.text = comment.ToString();
-    }
-
-    public void GameFinishUI(int score, string comment)
-    {
-        finishText.text = "Kazandýn";
         performanceScore.text = "Skor: " + score.ToString();
         performanceText.text = comment.ToString();
     }

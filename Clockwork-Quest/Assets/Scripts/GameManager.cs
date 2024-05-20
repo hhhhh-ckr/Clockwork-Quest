@@ -83,14 +83,6 @@ public class GameManager : MonoBehaviour
         SceneTracker.instance.LoadScene("GameOver");
     }
 
-    public void GameFinish()
-    {
-        int performanceScore = CalculatePerformanceScore();
-        string performanceComment = GetPerformanceComment(performanceScore);
-        UIManager.instance.GameFinishUI(performanceScore, performanceComment);
-        SceneTracker.instance.LoadScene("GameOver");
-    }
-
     public int CalculatePerformanceScore()
     {
         score -= (int)completionTime; // Zaman arttıkça, puan azalsın
