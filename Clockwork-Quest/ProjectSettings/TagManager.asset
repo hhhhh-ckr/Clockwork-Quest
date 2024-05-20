@@ -9,6 +9,7 @@ TagManager:
   - Hazard
   - Ground
   - EndLevel
+  - ItemPlus
   layers:
   - Default
   - TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   - 
   - foreground
   - 
-  - 
+  - forwardground
   - 
   - 
   - 
@@ -54,4 +55,7 @@ TagManager:
     locked: 0
   - name: ForeGround
     uniqueID: 4167908831
+    locked: 0
+  - name: ForwardGround
+    uniqueID: 858515211
     locked: 0

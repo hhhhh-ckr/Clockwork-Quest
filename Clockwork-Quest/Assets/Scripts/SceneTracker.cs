@@ -1,35 +1,47 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneTracker : MonoBehaviour
 {
-    // Başlangıç sahnesinin adı
-    public string startingSceneName = "Bolum1";
+    public string StartingSceneName; // Oyunun başladığı sahne
+    public string MainMenuSceneName; // Oyunun ana ekran sahnesi
+    public string GameOverSceneName; // Oyuncunun kaybettiği sahne
+    public string CreditsSceneName; // Oyunu yapanların olduğu sahne
+    public string EndSceneName; // Oyunun bittiği sahne
 
     private void Start()
     {
-        // Bu GameObject'ı diğer sahnelerde de kullanabilmek için yok etme
-        DontDestroyOnLoad(gameObject);
-
-        // Oyuncunun son oynadığı sahneyi kontrol et
-        if (!PlayerPrefs.HasKey("LastPlayedScene"))
+        DontDestroyOnLoad(gameObject); // Bu GameObject'ı diğer sahnelerde de kullanabilmek için yok etme
+    }
+    
+    public void LoadScene(string name)
+    {
+        if (name == "Bolum1")
         {
-            // Eğer önceki bir sahne kaydedilmemişse, başlangıç sahnesini kullan
-            PlayerPrefs.SetString("LastPlayedScene", startingSceneName);
+            SceneManager.LoadScene(StartingSceneName);
+        }
+        else if (name == "MainMenu")
+        {
+            SceneManager.LoadScene(MainMenuSceneName);
+        }
+        else if (name == "GameOver")
+        {
+            SceneManager.LoadScene(GameOverSceneName);
+        }
+        else if (name == "Credits")
+        {
+            SceneManager.LoadScene(CreditsSceneName);
         }
     }
 
-    // Oyuncu bir bölümü tamamladığında çağrılacak olan metod
-    public void SaveLastPlayedScene(string sceneName)
+    private void OnCollisionEnter(Collision collision)
     {
-        // Son oynanan sahneyi kaydet
-        PlayerPrefs.SetString("LastPlayedScene", sceneName);
-    }
-    
-    // Oyuncunun oyunu yeniden başlatmak istediğinde çağrılacak olan metod
-    public void RestartGame()
-    {
-        // Başlangıç sahnesine geri dön
-        SceneManager.LoadScene(startingSceneName);
+        // Çarpışma olup olmadığını kontrol edin ve çarpışan nesnenin etiketini kontrol edin
+        if (collision.gameObject.CompareTag("SceneEnder")) // Örnek olarak, eğer çarpışan nesne "Player" etiketine sahipse
+        {
+            SceneManager.LoadScene(EndSceneName);
+        }
     }
 }
